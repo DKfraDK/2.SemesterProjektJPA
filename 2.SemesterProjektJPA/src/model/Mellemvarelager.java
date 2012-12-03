@@ -11,15 +11,14 @@ import javax.persistence.Table;
 import service.Service;
 
 @Entity
-@Table(name="Mellemvarelager")
 public class Mellemvarelager { //One-to-many Unidirectional
 	@Id
 	private String navn;
 	private static Mellemvarelager uniqueInstance;
 	private List<String> placeringer = new ArrayList<String>();
-	@OneToMany(mappedBy="Mellemvarelager")
-	private ArrayList<Mellemvare> mellemvarer = new ArrayList<Mellemvare>();
-	private ArrayList<Mellemvare> faerdigeMellemvarer = new ArrayList<Mellemvare>();
+	@OneToMany
+	private List<Mellemvare> mellemvarer = new ArrayList<Mellemvare>();
+	private List<Mellemvare> faerdigeMellemvarer = new ArrayList<Mellemvare>();
 
 	private int dage = 0;
 

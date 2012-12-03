@@ -3,10 +3,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 @Entity
@@ -17,7 +19,7 @@ public class Mellemvare {
 	private Status status = null;
 	@ManyToOne
 	private Produkttype produkttype =null;
-	@OneToMany
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private List<Toerretid> toerretider = new ArrayList<Toerretid>();
 	
 	public Mellemvare(String id, Produkttype produkttype, int tid){

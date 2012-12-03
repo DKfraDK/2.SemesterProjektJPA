@@ -5,17 +5,22 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 @Entity
 public class Behandling {
-@Id
+	@Id
 	private String navn;
+	@OneToMany
 	private List<Delbehandling> delbehandlinger = new ArrayList<Delbehandling>();
+
 	public Behandling(String navn) {
 		this.setNavn(navn);
 
 	}
-	public Behandling(){
-		
+
+	public Behandling() {
+
 	}
 
 	public Delbehandling createDelbehandling(String navn, int Toerretid,
@@ -38,8 +43,8 @@ public class Behandling {
 			delbehandlinger.remove(delbehandling);
 		}
 	}
-	
-	public ArrayList<Delbehandling> getDelbehandlinger(){
+
+	public ArrayList<Delbehandling> getDelbehandlinger() {
 		return new ArrayList<Delbehandling>(delbehandlinger);
 	}
 
@@ -50,8 +55,8 @@ public class Behandling {
 	public void setNavn(String navn) {
 		this.navn = navn;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return navn;
 	}
 
