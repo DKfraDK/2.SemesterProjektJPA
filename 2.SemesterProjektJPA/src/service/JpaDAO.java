@@ -20,13 +20,8 @@ public class JpaDAO {
 	private EntityTransaction tx = em.getTransaction();
 	
 	public static void main(String[] args) {
-<<<<<<< HEAD
-		Delbehandling d = new Delbehandling("peter", 1, 2, 3);
-		Behandling b = new Behandling("Lars");
-=======
 		Delbehandling d = new Delbehandling("ChokoladeOvertraek", 1, 2, 3);
 		Behandling b = new Behandling("Chokolade");
->>>>>>> branch 'master' of https://github.com/DKfraDK/2.SemesterProjektJPA.git
 		b.addDelbehandling(d);
 		Produkttype p = new Produkttype("Skumbanan", b);
 		Mellemvare m = new Mellemvare("Mellemvare1", p, 0);
