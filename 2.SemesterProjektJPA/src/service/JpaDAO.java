@@ -20,7 +20,7 @@ public class JpaDAO {
 	private EntityTransaction tx = em.getTransaction();
 	
 	public static void main(String[] args) {
-		Delbehandling d = new Delbehandling("1", 1, 2, 3);
+		Delbehandling d = new Delbehandling("peter", 1, 2, 3);
 		Behandling b = new Behandling("Lars");
 		b.addDelbehandling(d);
 		Produkttype p = new Produkttype("LarsLarsen", b);
