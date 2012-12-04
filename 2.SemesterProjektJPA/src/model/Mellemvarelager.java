@@ -155,7 +155,7 @@ public class Mellemvarelager { //One-to-many Unidirectional
 		m.setStatus(Status.FAERDIG);
 	}
 
-	public ArrayList<Mellemvare> getMellemvarer() {
+	public List<Mellemvare> getMellemvarer() {
 		return new ArrayList<Mellemvare>(mellemvarer);
 	}
 
@@ -200,6 +200,9 @@ public class Mellemvarelager { //One-to-many Unidirectional
 
 	public void clearLager() {
 		mellemvarer.clear();
+	}
+	public void setMellemvarer(List<Mellemvare> allMellemvarer) {
+		mellemvarer = allMellemvarer;
 	}
 
 }

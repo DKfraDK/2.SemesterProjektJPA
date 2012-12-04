@@ -60,6 +60,8 @@ public class Service {
 		Mellemvare m7 = createMellemvare("vare7", pChokoladeLakrids, 3);
 		
 		Service.getMellemvarelager().updateLagerBeholdning();
+		
+		Dao.updateDB();
 
 	}
 
