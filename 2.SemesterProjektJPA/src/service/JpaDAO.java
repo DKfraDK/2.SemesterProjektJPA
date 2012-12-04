@@ -1,6 +1,6 @@
 package service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,12 +20,17 @@ public class JpaDAO {
 	private EntityTransaction tx = em.getTransaction();
 	
 	public static void main(String[] args) {
+<<<<<<< HEAD
 		Delbehandling d = new Delbehandling("peter", 1, 2, 3);
 		Behandling b = new Behandling("Lars");
+=======
+		Delbehandling d = new Delbehandling("ChokoladeOvertraek", 1, 2, 3);
+		Behandling b = new Behandling("Chokolade");
+>>>>>>> branch 'master' of https://github.com/DKfraDK/2.SemesterProjektJPA.git
 		b.addDelbehandling(d);
-		Produkttype p = new Produkttype("LarsLarsen", b);
-		Mellemvare m = new Mellemvare("Hej", p, 0);
-		getDao().storeMellemvare(m);
+		Produkttype p = new Produkttype("Skumbanan", b);
+		Mellemvare m = new Mellemvare("Mellemvare1", p, 0);
+		getDao().storeMellemvare(m, d, b, p);
 		System.out.println(getDao().getAllMellemvarer());
 	}
 	
@@ -41,13 +46,16 @@ public class JpaDAO {
 		//singleton
 	}
 	
-	public void storeMellemvare(Mellemvare m){
+	public void storeMellemvare(Mellemvare m, Delbehandling d, Behandling b, Produkttype p){
 		tx.begin();
 		em.persist(m);
+		em.persist(d);
+		em.persist(b);
+		em.persist(p);
 		tx.commit();
 	}
 	
-	public ArrayList<Mellemvare> getAllMellemvarer() {
-		   return (ArrayList<Mellemvare>) em.createQuery("SELECT m FROM Mellemvare m", Mellemvare.class).getResultList();
+	public List<Mellemvare> getAllMellemvarer() {
+		   return em.createQuery("SELECT m FROM Mellemvare m", Mellemvare.class).getResultList();
 		}
 }
