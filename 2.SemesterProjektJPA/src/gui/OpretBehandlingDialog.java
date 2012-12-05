@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class OpretBehandlingDialog extends JDialog {
 		setVisible(true);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
-		
+
 		delbehandlinger_list = new JList();
 		delbehandlinger_list.setBounds(6, 59, 158, 168);
 		getContentPane().add(delbehandlinger_list);
