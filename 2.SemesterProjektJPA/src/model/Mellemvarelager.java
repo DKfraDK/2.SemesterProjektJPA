@@ -188,16 +188,6 @@ public class Mellemvarelager { //One-to-many Unidirectional
 		mellemvarer = Service.getMellemvarer();
 	}
 
-	public ArrayList<Mellemvare> getForGamleMellemvarer() {
-		ArrayList<Mellemvare> resultList = new ArrayList<Mellemvare>();
-		for (Mellemvare m : mellemvarer) {
-			if (m.getSidsteDelbehandling().getMaxToerreTid() < getDageTilToerreSidenSidsteDelbehandling(m)) {
-				resultList.add(m);
-			}
-		}
-		return resultList;
-	}
-
 	public void clearLager() {
 		mellemvarer.clear();
 	}
@@ -205,8 +195,8 @@ public class Mellemvarelager { //One-to-many Unidirectional
 		mellemvarer = allMellemvarer;
 	}
 	
-	public ArrayList<Mellemvare> getForGamleMellemvareList() {
-		return new ArrayList<Mellemvare>(forGamleMellemvare);
+	public List<Mellemvare> getForGamleMellemvareList() {
+		return forGamleMellemvare;
 	}
 	
 	public void setForGamleMellemvareList(ArrayList<Mellemvare> nyList){

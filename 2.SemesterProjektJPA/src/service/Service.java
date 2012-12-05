@@ -16,15 +16,17 @@ public class Service {
 	public static void nyDag() {
 		int nyDag = dao.getMellemvarelager().getDage() + 1;
 		dao.getMellemvarelager().setDage(nyDag);
-		ArrayList<Mellemvare> result = new ArrayList<Mellemvare>();
 		for (Mellemvare m : dao.getMellemvarelager().getMellemvarer()) {
 			if (m.getSidsteDelbehandling().getMaxToerreTid() < dao
 					.getMellemvarelager()
 					.getDageTilToerreSidenSidsteDelbehandling(m)) {
-				result.add(m);
+				dao.getMellemvarelager().getForGamleMellemvareList().add(m);
 			}
 		}
-		dao.getMellemvarelager().setForGamleMellemvareList(result);
+		for(Mellemvare m : dao.getMellemvarelager().getForGamleMellemvareList()){
+			dao.removeMellemvare(m);
+		}
+		dao.getMellemvarelager().updateLagerBeholdning();
 
 	}
 
@@ -81,6 +83,7 @@ public class Service {
 		if (!dao.getMellemvarer().contains(mellemvare)) {
 			dao.addMellemvare(mellemvare);
 		}
+		dao.getMellemvarelager().updateLagerBeholdning();
 		return mellemvare;
 	}
 

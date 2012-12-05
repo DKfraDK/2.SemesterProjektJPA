@@ -15,6 +15,7 @@ import service.Service;
 public class MellemvareLagerGUI extends JFrame {
 
 	private JPanel contentPane;
+	private JTabbedPane tabbedPane;
 
 	/**
 	 * Launch the application.
@@ -35,7 +36,7 @@ public class MellemvareLagerGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+	    tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addTab("Lagerstyring", new LagerStyringPane());
 		tabbedPane.addTab("Mellemvarer", new MellemvarePane());
 		tabbedPane.addTab("Produkttyper", new ProdukttypePane());
@@ -45,6 +46,10 @@ public class MellemvareLagerGUI extends JFrame {
 		contentPane.add(tabbedPane);
 		
 		setVisible(true);
+	}
+	
+	public JTabbedPane getTabbedPane(){
+		return tabbedPane;
 	}
 
 }

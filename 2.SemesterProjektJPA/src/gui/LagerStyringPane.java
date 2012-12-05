@@ -4,11 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import service.JpaDao;
 import service.Service;
 
 public class LagerStyringPane extends JPanel {
@@ -76,7 +76,7 @@ public class LagerStyringPane extends JPanel {
 			}else if(e.getSource() == nsteMellemvareTilBehandling_btn){
 				JOptionPane.showMessageDialog(null, Service.getMellemvarelager().getNaesteMellemvareTilBehandling(), "N¾ste mellemvare til behandling", JOptionPane.PLAIN_MESSAGE);
 			}else if(e.getSource() == forGamleMellemvarer_btn){
-				JOptionPane.showMessageDialog(null, Service.getMellemvarelager().getForGamleMellemvarer().toArray(), "For gamle mellemvarer", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(null, Service.getMellemvarelager().getForGamleMellemvareList().toArray(), "For gamle mellemvarer", JOptionPane.PLAIN_MESSAGE);
 			}else if(e.getSource() == faerdigeMellemvarer_btn){
 				JOptionPane.showMessageDialog(null, Service.getMellemvarelager().getFaerdigeMellemvarer().toArray(), "F¾rdige varer", JOptionPane.PLAIN_MESSAGE);
 			}else if(e.getSource() == statistikForGamleMellemvarer_btn){

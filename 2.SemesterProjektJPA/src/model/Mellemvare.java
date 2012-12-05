@@ -91,7 +91,7 @@ public class Mellemvare {
 	}
 	
 	public String toString(){
-		return id + " har placering: " + Service.getMellemvarelager().getPlacering(this);
+		return id + " [placering: " + Service.getMellemvarelager().getPlacering(this) + "]";
 	}
 	public Status getStatus() {
 		return status;
