@@ -8,13 +8,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import service.Dao;
+import service.JpaDao;
 import service.Service;
 
 public class LagerStyringPane extends JPanel {
 
 	private Controller controller = new Controller();
-	private JButton nsteDag_btn, kritiskeMellemvarer_btn, nsteMellemvareTilBehandling_btn, forGamleMellemvarer_btn, faerdigeMellemvarer_btn, gem_btn;
+	private JButton nsteDag_btn, kritiskeMellemvarer_btn, nsteMellemvareTilBehandling_btn, forGamleMellemvarer_btn, faerdigeMellemvarer_btn, 
+					statistikForGamleMellemvarer_btn;
 	private JLabel nuvaerendeDag_lbl;
 	
 	/**
@@ -47,11 +48,11 @@ public class LagerStyringPane extends JPanel {
 		faerdigeMellemvarer_btn.setBounds(97, 202, 251, 29);
 		add(faerdigeMellemvarer_btn);
 		faerdigeMellemvarer_btn.addActionListener(controller);
-		
-		gem_btn = new JButton("Gem i database");
-		gem_btn.setBounds(97, 243, 251, 29);
-		add(gem_btn);
-		gem_btn.addActionListener(controller);
+
+		statistikForGamleMellemvarer_btn = new JButton("Statistik over gamle mellemvarer");
+		statistikForGamleMellemvarer_btn.setBounds(97, 243, 251, 29);
+		add(statistikForGamleMellemvarer_btn);
+		statistikForGamleMellemvarer_btn.addActionListener(controller);
 		
 		JLabel dag_lbl = new JLabel("Dag:");
 		dag_lbl.setBounds(112, 10, 61, 16);
@@ -78,10 +79,8 @@ public class LagerStyringPane extends JPanel {
 				JOptionPane.showMessageDialog(null, Service.getMellemvarelager().getForGamleMellemvarer().toArray(), "For gamle mellemvarer", JOptionPane.PLAIN_MESSAGE);
 			}else if(e.getSource() == faerdigeMellemvarer_btn){
 				JOptionPane.showMessageDialog(null, Service.getMellemvarelager().getFaerdigeMellemvarer().toArray(), "F¾rdige varer", JOptionPane.PLAIN_MESSAGE);
-			}else if(e.getSource() == gem_btn){
-				Dao.dropDb();
-				int affectedObjects = Dao.updateDB();
-				JOptionPane.showMessageDialog(null, new String[]{"Database opdateret!", "Opdaterede objekter: " + affectedObjects}, "OK", JOptionPane.INFORMATION_MESSAGE);
+			}else if(e.getSource() == statistikForGamleMellemvarer_btn){
+				JOptionPane.showMessageDialog(null, Service.getMellemvarelager().getStatistikOverForGamleMellemvarer(), "Statistik over for gamle mellemvarer", JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 	}

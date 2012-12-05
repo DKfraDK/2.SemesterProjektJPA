@@ -7,16 +7,29 @@ import model.Delbehandling;
 import model.Mellemvare;
 import model.Mellemvarelager;
 import model.Produkttype;
+import model.Toerretid;
 
 public class Service {
 	
+	private static DaoInterface dao = JpaDao.getDao(); //V¾lg her hvilken dao du vil benytte, enten JpaDao eller Dao.
+	
 	public static void nyDag() {
-		int nyDag = Dao.getMellemvarelager().getDage() + 1;
-		Dao.getMellemvarelager().setDage(nyDag);
+		int nyDag = dao.getMellemvarelager().getDage() + 1;
+		dao.getMellemvarelager().setDage(nyDag);
+		ArrayList<Mellemvare> result = new ArrayList<Mellemvare>();
+		for (Mellemvare m : dao.getMellemvarelager().getMellemvarer()) {
+			if (m.getSidsteDelbehandling().getMaxToerreTid() < dao
+					.getMellemvarelager()
+					.getDageTilToerreSidenSidsteDelbehandling(m)) {
+				result.add(m);
+			}
+		}
+		dao.getMellemvarelager().setForGamleMellemvareList(result);
+
 	}
 
 	public static int getDag(){
-		return Dao.getMellemvarelager().getDage();
+		return dao.getMellemvarelager().getDage();
 	}
 	
 	public static void createSomeObjects() {
@@ -60,16 +73,13 @@ public class Service {
 		Mellemvare m7 = createMellemvare("vare7", pChokoladeLakrids, 3);
 		
 		Service.getMellemvarelager().updateLagerBeholdning();
-		
-		Dao.updateDB();
-
 	}
 
 	public static Mellemvare createMellemvare(String id,
 			Produkttype produkttype, int tid) {
 		Mellemvare mellemvare = new Mellemvare(id, produkttype, tid);
-		if (!Mellemvarelager.getInstance("lager 1").getMellemvarer().contains(mellemvare)) {
-			Mellemvarelager.getInstance("lager 1").addMellemvare(mellemvare);
+		if (!dao.getMellemvarer().contains(mellemvare)) {
+			dao.addMellemvare(mellemvare);
 		}
 		return mellemvare;
 	}
@@ -81,14 +91,18 @@ public class Service {
 	}
 
 	public static void deleteMellemvare(Mellemvare mellemvare) {
-		Mellemvarelager.getInstance("lager 1").removeMellemvare(mellemvare);
+		for(Toerretid t : mellemvare.getToerretider()){
+			mellemvare.deleteToerretid(t);
+			dao.removeToerretid(t);
+		}
+		dao.removeMellemvare(mellemvare);
 	}
 
 	public static Produkttype createProdukttype(String navn,
 			Behandling behandling) {
 		Produkttype produkttype = new Produkttype(navn, behandling);
-		if (!Dao.getProdukttyper().contains(produkttype)) {
-			Dao.addProdukttype(produkttype);
+		if (!dao.getProdukttyper().contains(produkttype)) {
+			dao.addProdukttype(produkttype);
 		}
 		return produkttype;
 	}
@@ -101,13 +115,13 @@ public class Service {
 
 	public static boolean deleteProdukttype(Produkttype produkttype) {
 		boolean found = false;
-		for(Mellemvare m : Dao.getMellemvarelager().getMellemvarer()){
+		for(Mellemvare m : dao.getMellemvarelager().getMellemvarer()){
 			if(m.getProdukttype().equals(produkttype)){
 				found = true;
 			}
 		}
 		if(!found){
-			Dao.removeProdukttype(produkttype);
+			dao.removeProdukttype(produkttype);
 			return true;
 		}else{
 			return false;
@@ -116,8 +130,8 @@ public class Service {
 
 	public static Behandling createBehandling(String navn) {
 		Behandling behandling = new Behandling(navn);
-		if (!Dao.getBehandlinger().contains(behandling)) {
-			Dao.addBehandling(behandling);
+		if (!dao.getBehandlinger().contains(behandling)) {
+			dao.addBehandling(behandling);
 		}
 		return behandling;
 	}
@@ -133,13 +147,13 @@ public class Service {
 
 	public static boolean deleteBehandling(Behandling behandling) {
 		boolean found = false;
-		for(Produkttype p : Dao.getProdukttyper()){
+		for(Produkttype p : dao.getProdukttyper()){
 			if(p.getBehandling().equals(behandling)){
 				found = true;
 			}
 		}
 		if(!found){
-			Dao.removeBehandling(behandling);
+			dao.removeBehandling(behandling);
 			return true;
 		}else{
 			return false;
@@ -149,8 +163,8 @@ public class Service {
 	public static Delbehandling createDelbehandling(String navn, int min,
 			int ideal, int max) {
 		Delbehandling delbehandling = new Delbehandling(navn, min, ideal, max);
-		if (!Dao.getDelbehandlinger().contains(delbehandling)) {
-			Dao.addDelbehandling(delbehandling);
+		if (!dao.getDelbehandlinger().contains(delbehandling)) {
+			dao.addDelbehandling(delbehandling);
 		}
 		return delbehandling;
 	}
@@ -165,7 +179,7 @@ public class Service {
 
 	public static boolean deleteDelBehandling(Delbehandling delbehandling) {
 		boolean found = false;
-		for(Behandling b : Dao.getBehandlinger()){
+		for(Behandling b : dao.getBehandlinger()){
 			for(Delbehandling d : b.getDelbehandlinger()){
 				if(d.equals(delbehandling)){
 					found = true;
@@ -173,7 +187,7 @@ public class Service {
 			}
 		}
 		if(!found){
-			Dao.removeDelbehandling(delbehandling);
+			dao.removeDelbehandling(delbehandling);
 			return true;
 		}else{
 			return false;
@@ -181,22 +195,22 @@ public class Service {
 	}
 
 	public static ArrayList<Mellemvare> getMellemvarer() {
-		return new ArrayList<Mellemvare>(Mellemvarelager.getInstance("lager 1").getMellemvarer());
+		return new ArrayList<Mellemvare>(dao.getMellemvarer());
 	}
 
 	public static ArrayList<Produkttype> getProdukttyper() {
-		return new ArrayList<Produkttype>(Dao.getProdukttyper());
+		return new ArrayList<Produkttype>(dao.getProdukttyper());
 	}
 
 	public static ArrayList<Behandling> getBehandling() {
-		return new ArrayList<Behandling>(Dao.getBehandlinger());
+		return new ArrayList<Behandling>(dao.getBehandlinger());
 	}
 
 	public static ArrayList<Delbehandling> getDelbehandlinger() {
-		return new ArrayList<Delbehandling>(Dao.getDelbehandlinger());
+		return new ArrayList<Delbehandling>(dao.getDelbehandlinger());
 	}
 	
 	public static Mellemvarelager getMellemvarelager(){
-		return Dao.getMellemvarelager();
+		return dao.getMellemvarelager();
 	}
 }

@@ -78,9 +78,14 @@ public class BehandlingPane extends JPanel {
 		public void valueChanged(ListSelectionEvent e) {
 			currentSelectedBehandling = (Behandling) behandling_list.getSelectedValue();
 			info_txtArea.setText("");
-			for(Delbehandling d : currentSelectedBehandling.getDelbehandlinger()){
-				info_txtArea.setText(info_txtArea.getText() + d + "\n");
+			if(currentSelectedBehandling != null){
+				for(Delbehandling d : currentSelectedBehandling.getDelbehandlinger()){
+					info_txtArea.setText(info_txtArea.getText() + d + "\n");
+				}
+			}else{
+				info_txtArea.setText("");
 			}
+
 		}
 
 	}

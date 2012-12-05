@@ -8,9 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import service.Service;
 @Entity
 public class Mellemvare {
 	@Id
@@ -90,7 +91,7 @@ public class Mellemvare {
 	}
 	
 	public String toString(){
-		return id;
+		return id + " har placering: " + Service.getMellemvarelager().getPlacering(this);
 	}
 	public Status getStatus() {
 		return status;

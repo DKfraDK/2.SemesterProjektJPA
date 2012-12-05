@@ -63,7 +63,13 @@ public class MellemvarePane extends JPanel {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			currentSelectedMellemvare = (Mellemvare) mellemvare_list.getSelectedValue();
-			info_txtArea.setText(currentSelectedMellemvare.getProdukttype() + "\n" + currentSelectedMellemvare.getProdukttype().getBehandling());
+			if(currentSelectedMellemvare != null){
+				info_txtArea.setText(currentSelectedMellemvare.getProdukttype() + "\n" + currentSelectedMellemvare.getProdukttype().getBehandling()
+						+ "\nPlacering: " + Service.getMellemvarelager().getPlacering(currentSelectedMellemvare));
+			}else{
+				info_txtArea.setText("");
+			}
+
 		}
 
 		@Override
@@ -72,6 +78,9 @@ public class MellemvarePane extends JPanel {
 				new OpretMellemvareDialog(mellemvare_list);
 			}else if(e.getSource() == fjernMellemvare_btn){
 				Service.deleteMellemvare(currentSelectedMellemvare);
+				mellemvare_list.setSelectedIndex(0);
+
+				Service.getMellemvarelager().updateLagerBeholdning();
 				mellemvare_list.setListData(Service.getMellemvarer().toArray());
 			}
 		}

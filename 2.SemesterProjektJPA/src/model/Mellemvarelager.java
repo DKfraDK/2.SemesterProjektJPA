@@ -15,10 +15,11 @@ public class Mellemvarelager { //One-to-many Unidirectional
 	@Id
 	private String navn;
 	private static Mellemvarelager uniqueInstance;
-	private List<String> placeringer = new ArrayList<String>();
 	@OneToMany
 	private List<Mellemvare> mellemvarer = new ArrayList<Mellemvare>();
 	private List<Mellemvare> faerdigeMellemvarer = new ArrayList<Mellemvare>();
+	private List<Mellemvare> forGamleMellemvare = new ArrayList<Mellemvare>();
+
 
 	private int dage = 0;
 
@@ -172,8 +173,7 @@ public class Mellemvarelager { //One-to-many Unidirectional
 	}
 
 	public int getPlacering(Mellemvare m) {
-		return placeringer.indexOf(m);
-
+		return mellemvarer.indexOf(m);
 	}
 
 	public int getDage() {
@@ -203,6 +203,18 @@ public class Mellemvarelager { //One-to-many Unidirectional
 	}
 	public void setMellemvarer(List<Mellemvare> allMellemvarer) {
 		mellemvarer = allMellemvarer;
+	}
+	
+	public ArrayList<Mellemvare> getForGamleMellemvareList() {
+		return new ArrayList<Mellemvare>(forGamleMellemvare);
+	}
+	
+	public void setForGamleMellemvareList(ArrayList<Mellemvare> nyList){
+		forGamleMellemvare = nyList;
+	}
+
+	public int getStatistikOverForGamleMellemvarer(){
+		return forGamleMellemvare.size();
 	}
 
 }

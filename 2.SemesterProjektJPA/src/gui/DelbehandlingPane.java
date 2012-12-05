@@ -4,9 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -17,6 +19,7 @@ public class DelbehandlingPane extends JPanel {
 
 	private Controller controller = new Controller();
 	private JList delbehandling_list;
+	private JTextArea info_txtArea;
 	private JButton fjernDelbehandling_btn, opretDelbehandling_btn;
 	
 	
@@ -42,6 +45,15 @@ public class DelbehandlingPane extends JPanel {
 		add(opretDelbehandling_btn);
 		opretDelbehandling_btn.addActionListener(controller);
 		
+		info_txtArea = new JTextArea();
+		info_txtArea.setEditable(false);
+		info_txtArea.setBounds(218, 102, 226, 192);
+		add(info_txtArea);
+		
+		JLabel infoOmValgt_lbl = new JLabel("Info om valgt delbehandling");
+		infoOmValgt_lbl.setBounds(239, 74, 177, 16);
+		add(infoOmValgt_lbl);
+		
 
 	}
 	
@@ -53,6 +65,14 @@ public class DelbehandlingPane extends JPanel {
 		public void valueChanged(ListSelectionEvent e) {
 			if(e.getSource() == delbehandling_list){
 				currentSelectedDelbehandling = (Delbehandling) delbehandling_list.getSelectedValue();
+				if(currentSelectedDelbehandling != null){
+					info_txtArea.setText("Min t¿rretid: " + currentSelectedDelbehandling.getMinToerreTid()
+							+ "\nIdeal t¿rretid: " + currentSelectedDelbehandling.getIdealToerreTid()
+							+ "\nMax t¿rretid: " + currentSelectedDelbehandling.getMaxToerreTid());
+				}else{
+					info_txtArea.setText("");
+				}
+
 			}
 		}
 

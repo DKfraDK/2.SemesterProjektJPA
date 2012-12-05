@@ -63,7 +63,11 @@ public class ProdukttypePane extends JPanel {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			currentSelectedProdukttype = (Produkttype) produkttype_list.getSelectedValue();
-			info_txtArea.setText("" + currentSelectedProdukttype.getBehandling());
+			if(currentSelectedProdukttype != null){
+				info_txtArea.setText("" + currentSelectedProdukttype.getBehandling());
+			}else{
+				info_txtArea.setText("");
+			}
 		}
 
 		@Override
