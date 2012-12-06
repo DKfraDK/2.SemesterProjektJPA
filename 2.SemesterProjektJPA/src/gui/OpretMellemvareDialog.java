@@ -91,6 +91,5 @@ public class OpretMellemvareDialog extends JDialog {
 				dispose();
 			}	
 		}
-	
 	}
 }

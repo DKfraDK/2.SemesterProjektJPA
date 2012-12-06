@@ -8,10 +8,12 @@ import model.Mellemvare;
 import model.Mellemvarelager;
 import model.Produkttype;
 import model.Toerretid;
+import dao.Dao;
+import dao.DaoInterface;
 
 public class Service {
 	
-	private static DaoInterface dao = JpaDao.getDao(); //V¾lg her hvilken dao du vil benytte, enten JpaDao eller Dao.
+	private static DaoInterface dao = Dao.getDao(); //V¾lg her hvilken dao du vil benytte, enten JpaDao eller Dao.
 	
 	public static void nyDag() {
 		int nyDag = dao.getMellemvarelager().getDage() + 1;

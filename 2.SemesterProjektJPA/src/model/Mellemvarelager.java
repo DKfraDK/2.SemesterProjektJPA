@@ -18,9 +18,7 @@ public class Mellemvarelager { //One-to-many Unidirectional
 	@OneToMany
 	private List<Mellemvare> mellemvarer = new ArrayList<Mellemvare>();
 	private List<Mellemvare> faerdigeMellemvarer = new ArrayList<Mellemvare>();
-	private List<Mellemvare> forGamleMellemvare = new ArrayList<Mellemvare>();
-
-
+	private List<Mellemvare> forGamleMellemvarer = new ArrayList<Mellemvare>();
 	private int dage = 0;
 
 	private Mellemvarelager(String navn) {
@@ -196,15 +194,15 @@ public class Mellemvarelager { //One-to-many Unidirectional
 	}
 	
 	public List<Mellemvare> getForGamleMellemvareList() {
-		return forGamleMellemvare;
+		return forGamleMellemvarer;
 	}
 	
 	public void setForGamleMellemvareList(ArrayList<Mellemvare> nyList){
-		forGamleMellemvare = nyList;
+		forGamleMellemvarer = nyList;
 	}
 
 	public int getStatistikOverForGamleMellemvarer(){
-		return forGamleMellemvare.size();
+		return forGamleMellemvarer.size();
 	}
 
 }
